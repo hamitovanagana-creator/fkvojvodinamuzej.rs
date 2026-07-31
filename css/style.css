@@ -295,6 +295,8 @@ button{font:inherit;cursor:pointer}
 
 /* ===== INLINE CONTENT CTA ===== */
 .inline-cta{background:var(--bg);border:2px solid var(--navy-900);padding:26px;margin:32px 0;text-align:center;box-shadow:var(--shadow-sm)}
+.inline-cta__offer{background:var(--navy-900);color:#fff;font-weight:800;font-size:1.05rem;text-transform:uppercase;letter-spacing:.02em;padding:14px 20px;margin:-26px -26px 20px;line-height:1.4}
+.inline-cta__offer b{color:var(--gold)}
 .inline-cta__title{font-weight:800;font-size:1.1rem;margin-bottom:6px}
 .inline-cta__sub{color:var(--text-600);font-size:.95rem;margin-bottom:18px}
 .inline-cta__actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
