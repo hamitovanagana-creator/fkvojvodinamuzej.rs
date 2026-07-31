@@ -1,0 +1,52 @@
+Options -Indexes
+ServerSignature Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Google/Bing verification files - serve directly, no redirect
+  RewriteCond %{REQUEST_URI} ^/(google|BingSiteAuth)[a-zA-Z0-9]*\.(html|xml)$ [NC]
+  RewriteRule ^ - [L]
+
+  # sitemap.xml → serve via sitemap.php (dynamic lastmod date)
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+  # .html → redirect to trailing-slash URL
+  RewriteCond %{THE_REQUEST} \s/(.+?)\.html[\s?] [NC]
+  RewriteRule ^ /%1/ [R=301,L]
+
+  # Add trailing slash if missing (not a real file or directory)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.+)$ /$1/ [R=301,L]
+
+  # Internally serve slug/ as slug.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([^/]+)/$ $1.html [L]
+
+  # Internally serve slotovi/slug/ as slotovi/slug.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^slotovi/([^/]+)/$ slotovi/$1.html [L]
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript text/xml application/json
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
