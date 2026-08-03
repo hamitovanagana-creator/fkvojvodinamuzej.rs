@@ -20,6 +20,10 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           port: 21
           protocol: ftps
+          # Unique state file per run forces a full re-upload every deploy instead of
+          # relying on git-diff-based incremental sync, which silently produced
+          # empty (0-byte) files for a subset of pages on a previous deploy.
+          state-name: ".ftp-deploy-sync-state-${{ github.run_id }}.json"
           exclude: |
             **/.git*
             **/.git*/**
