@@ -41,6 +41,36 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/sweet-bonanza-super-scatter/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/starlight-princess-super-scatter/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/sugar-rush/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/the-dog-house-megaways/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/big-bass-splash/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://fkvojvodinamuzej.rs/o-nama/</loc>
     <lastmod><?php echo $today; ?></lastmod>
     <changefreq>yearly</changefreq>
