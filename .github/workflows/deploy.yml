@@ -15,10 +15,11 @@ jobs:
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      # SamKirkland/FTP-Deploy-Action was replaced here: its concurrent uploads
-      # silently produced empty (0-byte) files for a consistent subset of pages
-      # on two separate full-resync deploys. lftp mirrors single-connection
-      # (no concurrency to race) and its own transfer verification is stricter.
+      # Uses lftp (single-connection, full mirror every run) instead of a JS
+      # deploy action. Note: pages were previously coming back empty after
+      # deploy - root cause was the host's Imunify malware scanner
+      # quarantining files that contained the raw affiliate URL, not the
+      # upload mechanism. See .htaccess /promo redirect for the fix.
       - name: Deploy via lftp (single-connection, verified)
         env:
           FTP_SERVER: ${{ secrets.FTP_SERVER }}
@@ -39,45 +40,7 @@ jobs:
           bye
           EOF
 
-      # Diagnostic: check the file size on the FTP server itself, immediately
-      # after upload, via the FTP SIZE command. If this shows correct sizes
-      # but the HTTP check below still shows 0 bytes, the problem is a
-      # serving/caching layer on the host, not the upload.
-      - name: FTP-side size check (diagnostic)
-        id: ftpcheck
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          files="index.html slotovi/chicken-road.html slotovi/chicken-road-2.html slotovi/sweet-bonanza.html slotovi/gates-of-olympus.html slotovi/starlight-princess.html"
-          script="set ftp:ssl-force true
-          set ftp:ssl-protect-data true
-          set ssl:verify-certificate no"
-          for f in $files; do
-            script="$script
-          size $f"
-          done
-          script="$script
-          bye"
-          output=$(lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p 21 "$FTP_SERVER" -e "$(echo "$script")" 2>&1)
-          echo "$output"
-          sizes=$(echo "$output" | grep -E '^[0-9]+$')
-          fail=0
-          i=0
-          for f in $files; do
-            i=$((i+1))
-            size=$(echo "$sizes" | sed -n "${i}p")
-            echo "FTP-side: $f = ${size:-unknown} bytes"
-            if [ -z "$size" ] || [ "$size" -lt 500 ]; then
-              echo "::error::FTP-SIDE EMPTY/SMALL: $f ($size bytes) — upload itself is broken"
-              fail=1
-            fi
-          done
-          exit $fail
-
-      - name: HTTP-side verify deploy (fail loudly on empty pages)
-        if: always()
+      - name: Verify deploy (fail loudly on empty pages)
         run: |
           fail=0
           for path in "" "slotovi/chicken-road/" "slotovi/chicken-road-2/" "slotovi/sweet-bonanza/" "slotovi/sweet-bonanza-super-scatter/" "slotovi/gates-of-olympus/" "slotovi/starlight-princess/" "slotovi/starlight-princess-super-scatter/" "slotovi/sugar-rush/" "slotovi/the-dog-house-megaways/" "slotovi/big-bass-splash/" "o-nama/" "kontakt/" "odgovorno-kockanje/" "privacy-policy/" "uslovi-koriscenja/"; do
