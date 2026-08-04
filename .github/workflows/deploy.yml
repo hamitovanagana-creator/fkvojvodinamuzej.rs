@@ -12,19 +12,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: FTP Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
-          # Unique state file per run forces a full re-upload every deploy instead of
-          # relying on git-diff-based incremental sync, which silently produced
-          # empty (0-byte) files for a subset of pages on a previous deploy.
-          state-name: ".ftp-deploy-sync-state-${{ github.run_id }}.json"
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      # SamKirkland/FTP-Deploy-Action was replaced here: its concurrent uploads
+      # silently produced empty (0-byte) files for a consistent subset of pages
+      # on two separate full-resync deploys. lftp mirrors single-connection
+      # (no concurrency to race) and its own transfer verification is stricter.
+      - name: Deploy via lftp (single-connection, verified)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p 21 "$FTP_SERVER" <<'EOF'
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ssl:verify-certificate no
+          set mirror:parallel-transfer-count 1
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          mirror --reverse --verbose --no-perms \
+            --exclude-glob .git* \
+            --exclude-glob .github/ \
+            ./ ./
+          bye
+          EOF
+
+      - name: Verify deploy (fail loudly on empty pages)
+        run: |
+          fail=0
+          for path in "" "slotovi/chicken-road/" "slotovi/chicken-road-2/" "slotovi/sweet-bonanza/" "slotovi/sweet-bonanza-super-scatter/" "slotovi/gates-of-olympus/" "slotovi/starlight-princess/" "slotovi/starlight-princess-super-scatter/" "slotovi/sugar-rush/" "slotovi/the-dog-house-megaways/" "slotovi/big-bass-splash/" "o-nama/" "kontakt/" "odgovorno-kockanje/" "privacy-policy/" "uslovi-koriscenja/"; do
+            url="https://fkvojvodinamuzej.rs/${path}"
+            size=$(curl -s -o /dev/null -w "%{size_download}" "$url")
+            if [ "$size" -lt 500 ]; then
+              echo "::error::EMPTY OR TOO SMALL: $url ($size bytes)"
+              fail=1
+            else
+              echo "OK: $url ($size bytes)"
+            fi
+          done
+          exit $fail
