@@ -71,6 +71,30 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/eternal-diamonds/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/helios-triple-sun/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/triple-hop-pots/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/gates-of-olympus-2500/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://fkvojvodinamuzej.rs/o-nama/</loc>
     <lastmod><?php echo $today; ?></lastmod>
     <changefreq>yearly</changefreq>

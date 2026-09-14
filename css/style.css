@@ -194,6 +194,7 @@ button{font:inherit;cursor:pointer}
 .badge--vol-niska{background:var(--green-tint);color:var(--green)}
 .badge--vol-srednja{background:var(--amber-tint);color:var(--amber)}
 .badge--vol-visoka{background:var(--red-tint);color:var(--red)}
+.badge--soon{background:var(--amber-tint);color:var(--amber)}
 .slot-card__foot{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--border)}
 .slot-card__win{font-size:.8rem;color:var(--text-600)}
 .slot-card__win b{color:var(--text-900)}
