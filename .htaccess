@@ -8,7 +8,7 @@ ServerSignature Off
   # Affiliate redirect - kept out of page HTML so the raw affiliate URL
   # never appears in static content (avoids host-side malware-scanner
   # false positives that were quarantining pages containing it directly)
-  RewriteRule ^promo/?$ https://affrs.top/L?tag=e_5913660m_96329c_&site=5913660&ad=96329&r=slots [R=302,L,NC]
+  RewriteRule ^promo/?$ https://affrs.top/L?tag=e_5913660m_96329c_&site=5913660&ad=96329&r=slots [R=301,L,NC]
 
   # Google/Bing verification files - serve directly, no redirect
   RewriteCond %{REQUEST_URI} ^/(google|BingSiteAuth)[a-zA-Z0-9]*\.(html|xml)$ [NC]
