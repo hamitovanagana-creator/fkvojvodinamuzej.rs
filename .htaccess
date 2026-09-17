@@ -5,6 +5,14 @@ ServerSignature Off
   RewriteEngine On
   RewriteBase /
 
+  # Force HTTPS. Checks X-Forwarded-Proto (set by Cloudflare) in addition to
+  # %{HTTPS}, since Cloudflare may proxy to the origin over plain HTTP even
+  # when the visitor connected over HTTPS - relying on %{HTTPS} alone would
+  # either miss real HTTP visitors or create a redirect loop.
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
   # Affiliate redirect - kept out of page HTML so the raw affiliate URL
   # never appears in static content (avoids host-side malware-scanner
   # false positives that were quarantining pages containing it directly)
