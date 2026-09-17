@@ -5,6 +5,11 @@ ServerSignature Off
   RewriteEngine On
   RewriteBase /
 
+  # Force non-www. Checked first (independent of scheme) so a www + http
+  # visitor lands on https+non-www in a single redirect instead of two hops.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
   # Force HTTPS. Checks X-Forwarded-Proto (set by Cloudflare) in addition to
   # %{HTTPS}, since Cloudflare may proxy to the origin over plain HTTP even
   # when the visitor connected over HTTPS - relying on %{HTTPS} alone would
