@@ -43,7 +43,7 @@ jobs:
       - name: Verify deploy (fail loudly on empty pages)
         run: |
           fail=0
-          for path in "" "slotovi/chicken-road/" "slotovi/chicken-road-2/" "slotovi/sweet-bonanza/" "slotovi/sweet-bonanza-super-scatter/" "slotovi/gates-of-olympus/" "slotovi/starlight-princess/" "slotovi/starlight-princess-super-scatter/" "slotovi/sugar-rush/" "slotovi/the-dog-house-megaways/" "slotovi/big-bass-splash/" "slotovi/respin-joker/" "slotovi/eternal-diamonds/" "slotovi/helios-triple-sun/" "slotovi/triple-hop-pots/" "slotovi/gates-of-olympus-2500/" "o-nama/" "kontakt/" "odgovorno-kockanje/" "privacy-policy/" "uslovi-koriscenja/"; do
+          for path in "" "slotovi/chicken-road/" "slotovi/chicken-road-2/" "slotovi/sweet-bonanza/" "slotovi/sweet-bonanza-super-scatter/" "slotovi/gates-of-olympus/" "slotovi/starlight-princess/" "slotovi/starlight-princess-super-scatter/" "slotovi/sugar-rush/" "slotovi/the-dog-house-megaways/" "slotovi/big-bass-splash/" "slotovi/respin-joker/" "slotovi/eternal-diamonds/" "slotovi/helios-triple-sun/" "slotovi/triple-hop-pots/" "slotovi/gates-of-olympus-2500/" "slotovi/forever-split/" "slotovi/deep-sea-frenzy/" "o-nama/" "kontakt/" "odgovorno-kockanje/" "privacy-policy/" "uslovi-koriscenja/"; do
             url="https://fkvojvodinamuzej.rs/${path}"
             size=$(curl -s -o /dev/null -w "%{size_download}" "$url")
             if [ "$size" -lt 500 ]; then

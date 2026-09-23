@@ -101,6 +101,18 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/forever-split/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://fkvojvodinamuzej.rs/slotovi/deep-sea-frenzy/</loc>
+    <lastmod><?php echo $today; ?></lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://fkvojvodinamuzej.rs/o-nama/</loc>
     <lastmod><?php echo $today; ?></lastmod>
     <changefreq>yearly</changefreq>
