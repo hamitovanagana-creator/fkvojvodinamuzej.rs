@@ -11,7 +11,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://fkvojvodinamuzej.rs/online-kazino-srbija/</loc>
+    <loc>https://fkvojvodinamuzej.rs/slot-igre/</loc>
     <lastmod><?php echo $today; ?></lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>

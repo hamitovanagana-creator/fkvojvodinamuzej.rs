@@ -330,9 +330,6 @@ button{font:inherit;cursor:pointer}
   .content-cols{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr 1fr}
 }
-@media(max-width:1500px){
-  .header-actions .lang-pill{display:none}
-}
 @media(max-width:1300px){
   .main-nav,.header-actions .lang-pill,.header-actions .btn-gold{display:none}
   .burger{display:flex}
