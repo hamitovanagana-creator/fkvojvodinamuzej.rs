@@ -1,4 +1,4 @@
-/* Najbolje Slot Igre — Vue 3 interactive islands.
+/* Najbolja online kazina Srbije — Vue 3 interactive islands.
    Each component mounts only if its root element exists on the page,
    so a single shared bundle works across every page without errors.
    Static markup already in the HTML is the SEO/no-JS fallback; Vue
